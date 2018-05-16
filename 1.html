@@ -1,0 +1,350 @@
+<head>
+    <script
+    src="http://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+<style>
+    #table1{
+        width: 250px;
+        height: 250px;
+        background-color: black;
+        border-collapse: collapse;
+        border: grey solid;
+    }
+    td{
+        height:50px;
+        width:50px; 
+    }
+</style>
+</head>
+<body>
+    <center>
+        <h1>Go to Red</h1>
+        <table id='table1'>
+            <tr>
+                <td class = '1' id='1'></td>
+                <td class = '2' id='2'></td>
+                <td class = '3' id='3'></td>
+                <td class = '4' id='4'></td>
+                <td class = '5' id='5'></td>
+            </tr>
+            <tr>
+                <td class = '6' id='6'></td>
+                <td class = '7' id='7'></td>
+                <td class = '8' id='8'></td>
+                <td class = '9' id='9'></td>
+                <td class = '10' id='10'></td>
+            </tr>        
+            <tr>
+                <td class = '11' id='11'></td>
+                <td class = '12' id='12'></td>
+                <td class = '13' id='13'></td>
+                <td class = '14' id='14'></td>
+                <td class = '15' id='15'></td>
+            </tr>
+            <tr>
+                <td class = '16' id='16'></td>
+                <td class = '17' id='17'></td>
+                <td class = '18' id='18'></td>
+                <td class = '19' id='19'></td>
+                <td class = '20' id='20'></td>
+            </tr>
+            <tr>
+                <td class = '21' id='21'></td>
+                <td class = '22' id='22'></td>
+                <td class = '23' id='23'></td>
+                <td class = '24' id='24'></td>
+                <td class = '25' id='25'></td>
+            </tr>
+        </table>
+        <button onclick="start()">Start</button>
+        <br>
+        <button onclick="moveUp()">Up</button>
+        <br>    
+        <button onclick="moveLeft()"><=</button>
+        <button onclick="moveDown()">Down</button>
+        <button onclick="moveRight()">=></button>
+        <P id="userInput"></P>
+        <br>
+        <button onclick="reset()">Reset</button>
+        <br>
+        <a href='http://localhost:3000/'>Return</a>
+    </center>
+</body>
+<footer>
+    <script>
+        var arr = [
+            {up:1,left:1,down:0,right:1,x:1,y:1,place:0,status:'start',arrayNumber:0},
+            {up:1,left:0,down:0,right:0,x:1,y:2,place:0,status:'',arrayNumber:1},
+            {up:1,left:0,down:1,right:0,x:1,y:3,place:0,status:'',arrayNumber:2},
+            {up:1,left:0,down:1,right:0,x:1,y:4,place:0,status:'',arrayNumber:3},
+            {up:1,left:0,down:0,right:1,x:1,y:5,place:0,status:'',arrayNumber:4},
+            
+            {up:0,left:1,down:0,right:1,x:2,y:1,place:0,status:'',arrayNumber:5},
+            {up:0,left:0,down:0,right:0,x:2,y:2,place:0,status:'',arrayNumber:6},
+            {up:0,left:0,down:1,right:0,x:2,y:3,place:0,status:'',arrayNumber:7},
+            {up:0,left:0,down:1,right:1,x:2,y:4,place:0,status:'',arrayNumber:8},
+            {up:0,left:0,down:0,right:1,x:2,y:5,place:0,status:'',arrayNumber:9},
+            
+            {up:0,left:1,down:0,right:1,x:3,y:1,place:0,status:'',arrayNumber:10},
+            {up:0,left:1,down:0,right:1,x:3,y:2,place:0,status:'',arrayNumber:11},
+            {up:0,left:1,down:0,right:0,x:3,y:3,place:0,status:'',arrayNumber:12},
+            {up:0,left:0,down:0,right:0,x:3,y:4,place:0,status:'',arrayNumber:13},
+            {up:0,left:0,down:0,right:1,x:3,y:5,place:0,status:'',arrayNumber:14},
+            
+            {up:0,left:1,down:1,right:0,x:4,y:1,place:0,status:'',arrayNumber:15},
+            {up:0,left:0,down:1,right:1,x:4,y:2,place:0,status:'',arrayNumber:16},
+            {up:0,left:0,down:0,right:1,x:4,y:3,place:0,status:'',arrayNumber:17},
+            {up:0,left:0,down:1,right:1,x:4,y:4,place:0,status:'',arrayNumber:18},
+            {up:1,left:0,down:0,right:1,x:4,y:5,place:0,status:'finish',arrayNumber:19},
+            
+            {up:0,left:1,down:1,right:0,x:5,y:1,place:0,status:'',arrayNumber:20},
+            {up:0,left:0,down:1,right:0,x:5,y:2,place:0,status:'',arrayNumber:21},
+            {up:0,left:0,down:1,right:0,x:5,y:3,place:0,status:'',arrayNumber:22},
+            {up:0,left:0,down:1,right:0,x:5,y:4,place:0,status:'',arrayNumber:23},
+            {up:0,left:0,down:1,right:1,x:5,y:5,place:0,status:'',arrayNumber:24},]
+        function start(){
+            for(i=0;i<25;i++){
+                if(arr[i].up==1 && arr[i].arrayNumber> 5){
+                    arr[i-5].down=Math.ceil((arr[i-5].down+1)/2)
+                }
+            }
+            for(i=0;i<20;i++){
+                if(arr[i].down==1){
+                    arr[i+5].up=Math.ceil((arr[i+5].down+1)/2)
+                }
+            }
+            for(i=0;i<25;i++){
+                if(arr[i].right==1 && arr[i].arrayNumber < 24){
+                    arr[i+1].left=Math.ceil((arr[i+1].left+1)/2)
+                }
+            }
+            for(i=0;i<25;i++){
+                if(arr[i].left==1 && arr[i].arrayNumber > 0){
+                    arr[i-1].right=Math.ceil((arr[i-1].right+1)/2)
+                }
+            }
+            for(i=0;i<25;i++){
+                if(arr[i].up==1){
+                    document.getElementById(i+1).style.borderTop="solid grey"
+                }
+            }
+            for(i=0;i<25;i++){
+                if(arr[i].down==1){
+                    document.getElementById(i+1).style.borderBottom="solid grey"
+                }
+            }
+            for(i=0;i<25;i++){
+                if(arr[i].left==1){
+                    document.getElementById(i+1).style.borderLeft="solid grey"
+                }
+            }
+            for(i=0;i<25;i++){
+                if(arr[i].right==1){
+                    document.getElementById(i+1).style.borderRight="solid grey"
+                }
+            }
+            for(i=0;i<25;i++){
+                if(arr[i].status=='start'){
+                    arr[i].place=arr[i].place+1
+                    document.getElementById(arr[i].arrayNumber+1).style.backgroundColor = 'white'
+                }
+            }            
+            for(i=0;i<25;i++){
+                if(arr[i].status=='finish'){
+                    document.getElementById(arr[i].arrayNumber+1).style.backgroundColor = 'red'
+                }
+            }
+            console.log(arr)
+        }
+        function moveRight(){
+            var x = arr
+            function target(x){
+                if(x.place>0){
+                    if(x.arrayNumber==x.arrayNumber+1){return true}
+                    else{return true}
+                }
+                else{return false}
+            }
+            var arrLocation = arr.filter(target)
+            if(arr[arrLocation[0].arrayNumber].place==1 && arr[arrLocation[0].arrayNumber].right==0){
+                function targetDestination(y){
+                    if(y.place==arrLocation[0].place){return true}
+                    if(y.arrayNumber==arrLocation[0].arrayNumber+1){return true}
+                    else{return false}
+                }
+                var absolute = arr.filter(targetDestination)
+                for(i=0;i<1;i++){
+                    arr[absolute[0].arrayNumber].place=arr[absolute[0].arrayNumber].place-1,
+                    arr[absolute[1].arrayNumber].place=arr[absolute[1].arrayNumber].place+1,
+                    document.getElementById(arr[absolute[0].arrayNumber].arrayNumber+1).style.backgroundColor = 'black',
+                    document.getElementById(arr[absolute[1].arrayNumber].arrayNumber+1).style.backgroundColor = 'white',
+                    document.getElementById('userInput').innerHTML=""
+                }
+            }
+            else if(arr[arrLocation[0].arrayNumber].status=='finish'){
+                document.getElementById('userInput').innerHTML="You've already won"
+            }     
+            else if(arr[arrLocation[0].arrayNumber].place==1 && arr[arrLocation[0].arrayNumber].right==1){
+                document.getElementById('userInput').innerHTML="Move unavailable"
+            }           
+            for(i=0;i<25;i++){
+                if(arr[i].place==1 && arr[i].status=='finish'){
+                    arr[i].place=arr[i].place+1
+                    document.getElementById('userInput').innerHTML="You win!"
+                }
+            }
+        }           
+        function moveLeft(){
+            for(i=0;i<25;i++){
+                if(arr[i].place==1 && arr[i].status=='finish'){
+                    console.log('You Win!, The finish line is in '+(arr[i].x)+', '+(arr[i].y))
+                    arr[i].place=arr[i].place+1 
+                }
+            }
+            function target(x){
+                if(x.place>0){
+                    if(x.arrayNumber==x.arrayNumber+1){return true}
+                    else{return true}
+                }
+                else{return false}
+            }
+            var arrLocation = arr.filter(target)
+            if(arr[arrLocation[0].arrayNumber].place==1 && arr[arrLocation[0].arrayNumber].left==0){
+                function targetDestination(y){
+                    if(y.place==arrLocation[0].place){return true}
+                    if(y.arrayNumber==arrLocation[0].arrayNumber-1){return true}
+                    else{return false}
+                }
+                var absolute = arr.filter(targetDestination)
+                for(i=0;i<1;i++){
+                    arr[absolute[0].arrayNumber].place=arr[absolute[0].arrayNumber].place+1,
+                    arr[absolute[1].arrayNumber].place=arr[absolute[1].arrayNumber].place-1,
+                    document.getElementById(arr[absolute[1].arrayNumber].arrayNumber+1).style.backgroundColor = 'black'
+                    document.getElementById(arr[absolute[0].arrayNumber].arrayNumber+1).style.backgroundColor = 'white'
+                    document.getElementById('userInput').innerHTML=""
+                }
+            }
+            else if(arr[arrLocation[0].arrayNumber].status=='finish'){
+                document.getElementById('userInput').innerHTML="You've already won"
+            }     
+            else if(arr[arrLocation[0].arrayNumber].place==1 && arr[arrLocation[0].arrayNumber].left==1){
+                document.getElementById('userInput').innerHTML="Move unavailable"
+            }                    
+            for(i=0;i<25;i++){
+                if(arr[i].place==1 && arr[i].status=='finish'){
+                    arr[i].place=arr[i].place+1
+                    document.getElementById('userInput').innerHTML="You win!"
+                }
+            }
+        }
+        function moveDown(){
+            for(i=0;i<25;i++){
+                if(arr[i].place==1 && arr[i].status=='finish'){
+                    console.log('You Win!, The finish line is in '+(arr[i].x)+', '+(arr[i].y))
+                    arr[i].place=arr[i].place+1 
+                }
+            }
+            function target(x){
+                if(x.place>0){
+                    if(x.arrayNumber==x.arrayNumber+1){return true}
+                else{return true}
+                }
+                else{return false}
+            }
+            var arrLocation = arr.filter(target)
+            if(arr[arrLocation[0].arrayNumber].place==1 && arr[arrLocation[0].arrayNumber].down==0){
+                function targetDestination(y){
+                    if(y.place==arrLocation[0].place){return true}
+                    if(y.arrayNumber==arrLocation[0].arrayNumber+5){return true}
+                    else{return false}
+                }
+                var absolute = arr.filter(targetDestination)
+                for(i=0;i<1;i++){
+                    arr[absolute[0].arrayNumber].place=arr[absolute[0].arrayNumber].place-1,
+                    arr[absolute[1].arrayNumber].place=arr[absolute[1].arrayNumber].place+1,
+                    document.getElementById(arr[absolute[0].arrayNumber].arrayNumber+1).style.backgroundColor = 'black'
+                    document.getElementById(arr[absolute[1].arrayNumber].arrayNumber+1).style.backgroundColor = 'white'
+                    document.getElementById('userInput').innerHTML=""
+                }
+            }
+            else if(arr[arrLocation[0].arrayNumber].status=='finish'){
+                document.getElementById('userInput').innerHTML="You've already won"
+            }     
+            else if(arr[arrLocation[0].arrayNumber].place==1 && arr[arrLocation[0].arrayNumber].down==1){
+                document.getElementById('userInput').innerHTML="Move unavailable"
+            }           
+            for(i=0;i<25;i++){
+                if(arr[i].place==1 && arr[i].status=='finish'){
+                    arr[i].place=arr[i].place+1
+                    document.getElementById('userInput').innerHTML="You win!"
+                }
+            }
+        }
+        function moveUp(){
+            for(i=0;i<25;i++){
+                if(arr[i].place==1 && arr[i].status=='finish'){
+                    console.log('You Win!, The finish line is in '+(arr[i].x)+', '+(arr[i].y))
+                    arr[i].place=arr[i].place+1 
+                }
+            }
+            function target(x){
+                if(x.place>0){
+                    if(x.arrayNumber==x.arrayNumber+1){return true}
+                    else{return true}
+                }
+                else{return false}
+            }
+            var arrLocation = arr.filter(target)
+            if(arr[arrLocation[0].arrayNumber].place==1 && arr[arrLocation[0].arrayNumber].up==0){
+                function targetDestination(y){
+                    if(y.place==arrLocation[0].place){return true}
+                    if(y.arrayNumber==arrLocation[0].arrayNumber-5){return true}
+                    else{return false}
+                }
+                var absolute = arr.filter(targetDestination)
+                for(i=0;i<1;i++){
+                    arr[absolute[0].arrayNumber].place=arr[absolute[0].arrayNumber].place+1,
+                    arr[absolute[1].arrayNumber].place=arr[absolute[1].arrayNumber].place-1,
+                    document.getElementById(arr[absolute[1].arrayNumber].arrayNumber+1).style.backgroundColor = 'black'
+                    document.getElementById(arr[absolute[0].arrayNumber].arrayNumber+1).style.backgroundColor = 'white'
+                    document.getElementById('userInput').innerHTML=""
+                }
+            }
+            else if(arr[arrLocation[0].arrayNumber].status=='finish'){
+                document.getElementById('userInput').innerHTML="You've already won"
+            }     
+            else if(arr[arrLocation[0].arrayNumber].place==1 && arr[arrLocation[0].arrayNumber].up==1){
+                document.getElementById('userInput').innerHTML="Move unavailable"
+            }                    
+            for(i=0;i<25;i++){
+                if(arr[i].place==1 && arr[i].status=='finish'){
+                    arr[i].place=arr[i].place+1
+                    document.getElementById('userInput').innerHTML="You win!"
+                }
+            }
+        }
+        function reset(){
+            for(i=0;i<25;i++){
+                document.getElementById(i+1).style.backgroundColor='black'
+                if(arr[i].place==1){
+                    arr[i].place=arr[i].place-1
+                }
+                if(arr[i].place==2){
+                    arr[i].place=arr[i].place-2
+                }
+            }
+            for(i=0;i<25;i++){
+                if(arr[i].status=='start'){
+                    arr[i].place=arr[i].place+1
+                    document.getElementById(arr[i].arrayNumber+1).style.backgroundColor = 'white'
+                }
+            }            
+            for(i=0;i<25;i++){
+                if(arr[i].status=='finish'){
+                    document.getElementById(arr[i].arrayNumber+1).style.backgroundColor = 'red'
+                }
+            }
+        }
+    </script>
+</footer>
